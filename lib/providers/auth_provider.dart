@@ -26,7 +26,6 @@ class AuthProvider with ChangeNotifier {
         password: password,
       );
 
-
       _user = user;
       return true;
     } catch (e) {

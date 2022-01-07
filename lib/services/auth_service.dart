@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:shamo/models/user_model.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  String baseUrl = 'http://127.0.0.1:8000/api';
+  String baseUrl = 'https://nonoms.nonoms.my.id/api';
   Future<UserModel> register({
     String name,
     String username,
@@ -26,12 +25,10 @@ class AuthService {
       body: body,
     );
 
-    print(response.body);
-
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['data'];
       UserModel user = UserModel.fromJson(data['user']);
-      user.token = 'Bearer' + data['access_token'];
+      user.token = 'Bearer ' + data['access_token'];
       return user;
     } else {
       throw Exception('Register Gagal');
