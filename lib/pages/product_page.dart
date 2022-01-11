@@ -25,9 +25,9 @@ class _ProductPageState extends State<ProductPage> {
     'assets/img_shoes6.png',
     'assets/img_shoes7.png',
     'assets/img_shoes10.png',
-    'assets/img_shoes21.png',
-    'assets/img_shoes22.png',
-    'assets/img_shoes23.png',
+    'assets/img_shoes21.jpg',
+    'assets/img_shoes22.jpg',
+    'assets/img_shoes23.jpg',
   ];
 
   int currentIndex = 0;
