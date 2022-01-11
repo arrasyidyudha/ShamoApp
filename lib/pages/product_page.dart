@@ -1,9 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:shamo/models/product_model.dart';
 import 'package:shamo/theme.dart';
 
 class ProductPage extends StatefulWidget {
+  final ProductModel product;
+  ProductPage(this.product);
+
   @override
   _ProductPageState createState() => _ProductPageState();
 }
@@ -16,15 +20,14 @@ class _ProductPageState extends State<ProductPage> {
   ];
 
   List familiarShoes = [
+    'assets/img_shoes4.png',
     'assets/img_shoes5.png',
     'assets/img_shoes6.png',
     'assets/img_shoes7.png',
-    'assets/img_shoes5.png',
-    'assets/img_shoes6.png',
-    'assets/img_shoes7.png',
-    'assets/img_shoes5.png',
-    'assets/img_shoes6.png',
-    'assets/img_shoes7.png',
+    'assets/img_shoes10.png',
+    'assets/img_shoes21.png',
+    'assets/img_shoes22.png',
+    'assets/img_shoes23.png',
   ];
 
   int currentIndex = 0;
@@ -177,10 +180,10 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
           CarouselSlider(
-            items: images
+            items: widget.product.galleries
                 .map(
-                  (image) => Image.asset(
-                    image,
+                  (image) => Image.network(
+                    image.url,
                     width: MediaQuery.of(context).size.width,
                     height: 310,
                     fit: BoxFit.cover,
@@ -198,7 +201,7 @@ class _ProductPageState extends State<ProductPage> {
           SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: images.map((e) {
+            children: widget.product.galleries.map((e) {
               index++;
               return indicator(index);
             }).toList(),
@@ -234,14 +237,14 @@ class _ProductPageState extends State<ProductPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'COURT VISION 2.0',
+                          widget.product.name,
                           style: primaryTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semiBold,
                           ),
                         ),
                         Text(
-                          'Sneakers',
+                          widget.product.category.name,
                           style: secondaryTextStyle.copyWith(
                             fontSize: 12,
                           ),
@@ -310,7 +313,7 @@ class _ProductPageState extends State<ProductPage> {
                     style: primaryTextStyle,
                   ),
                   Text(
-                    '\$40',
+                    '\$${widget.product.price}',
                     style: priceTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: semiBold,
@@ -341,7 +344,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 15,
                   ),
                   Text(
-                    'Lorem ipsum dolor sit amet enpilisum adipisicing elit. De maxima Molestiae facilis tempore ipsam odit tempora distinctio?',
+                    widget.product.description,
                     style: thirdTextStyle.copyWith(
                       fontWeight: light,
                     ),
