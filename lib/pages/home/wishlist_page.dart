@@ -45,7 +45,7 @@ class WishlistPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/img_cart.png',
+                'assets/img_favorite.png',
                 width: 74,
               ),
               SizedBox(
