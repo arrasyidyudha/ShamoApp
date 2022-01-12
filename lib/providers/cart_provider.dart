@@ -4,9 +4,10 @@ import 'package:shamo/models/product_model.dart';
 
 class CartProvider with ChangeNotifier {
   List<CartModel> _carts = [];
+
   List<CartModel> get carts => _carts;
 
-  set cart(List<CartModel> carts) {
+  set carts(List<CartModel> carts) {
     _carts = carts;
     notifyListeners();
   }
@@ -52,7 +53,6 @@ class CartProvider with ChangeNotifier {
     for (var item in _carts) {
       total += item.quantity;
     }
-
     return total;
   }
 
