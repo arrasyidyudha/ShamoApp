@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo/models/cart_model.dart';
+import 'package:shamo/providers/cart_provider.dart';
 import 'package:shamo/theme.dart';
 
 class CartCard extends StatelessWidget {
+  final CartModel cart;
+  CartCard(this.cart);
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: defaultMargin,
@@ -26,7 +33,9 @@ class CartCard extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                    image: AssetImage('assets/img_shoes5.png'),
+                    image: NetworkImage(
+                      cart.product.galleries[0].url,
+                    ),
                   ),
                 ),
               ),
@@ -38,13 +47,13 @@ class CartCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'COURT VISION 2.0',
+                      cart.product.name,
                       style: primaryTextStyle.copyWith(
                         fontWeight: semiBold,
                       ),
                     ),
                     Text(
-                      '\$40',
+                      '\$${cart.product.price}',
                       style: priceTextStyle,
                     ),
                   ],
@@ -52,15 +61,20 @@ class CartCard extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Image.asset(
-                    'assets/icon_add.png',
-                    width: 20,
+                  GestureDetector(
+                    onTap: () {
+                      cartProvider.addQuantity(cart.id);
+                    },
+                    child: Image.asset(
+                      'assets/icon_add.png',
+                      width: 20,
+                    ),
                   ),
                   SizedBox(
                     height: 2,
                   ),
                   Text(
-                    '2',
+                    cart.quantity.toString(),
                     style: primaryTextStyle.copyWith(
                       fontWeight: medium,
                     ),
@@ -68,9 +82,14 @@ class CartCard extends StatelessWidget {
                   SizedBox(
                     height: 2,
                   ),
-                  Image.asset(
-                    'assets/icon_min.png',
-                    width: 20,
+                  GestureDetector(
+                    onTap: () {
+                      cartProvider.reduceQuantity(cart.id);
+                    },
+                    child: Image.asset(
+                      'assets/icon_min.png',
+                      width: 20,
+                    ),
                   ),
                 ],
               ),
@@ -79,22 +98,27 @@ class CartCard extends StatelessWidget {
           SizedBox(
             height: 12,
           ),
-          Row(
-            children: [
-              Image.asset(
-                'assets/icon_remove.png',
-                width: 16,
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Text(
-                'Remove',
-                style: alertTextStyle.copyWith(
-                  fontWeight: light,
+          GestureDetector(
+            onTap: () {
+              cartProvider.removeCart(cart.id);
+            },
+            child: Row(
+              children: [
+                Image.asset(
+                  'assets/icon_remove.png',
+                  width: 16,
                 ),
-              )
-            ],
+                SizedBox(
+                  width: 4,
+                ),
+                Text(
+                  'Remove',
+                  style: alertTextStyle.copyWith(
+                    fontWeight: light,
+                  ),
+                )
+              ],
+            ),
           ),
         ],
       ),
